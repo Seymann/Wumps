@@ -13,19 +13,14 @@ def show_game(game=None):
     if game is None and 'game' in request.form:
         game = request.form['game']
     if game in gameDict:
-        if not gameDict[game].roundrunning and not gameDict[game].roundended:
-            phase = "Pregame"
-        elif gameDict[game].roundrunning:
-            phase = "In Round"
-        else:
-            phase = "Round Ended"
+        phase = gameDict[game].phase
         playerString = ""
         for name in gameDict[game].playerList:
-            playerString = playerString + " | " + name
-        if phase == "Round Ended":
-            pointedAt = gameDict[game].playerList[gameDict[game].pointer]
-        else:
+            playerString = playerString + name + " | "
+        if not gameDict[game].playerList:
             pointedAt = "None"
+        else:
+            pointedAt = gameDict[game].playerList[gameDict[game].pointer]
         counter = gameDict[game].roundcounter
         return render_template('game.html', name=game, phase=phase, playerList=playerString, pointedAt=pointedAt, counter=counter)
     else:
