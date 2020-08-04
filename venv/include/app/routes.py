@@ -14,15 +14,24 @@ def show_game(game=None):
         game = request.form['game']
     if game in gameDict:
         phase = gameDict[game].phase
-        playerString = ""
-        for name in gameDict[game].playerList:
-            playerString = playerString + name + " | "
+
         if not gameDict[game].playerList:
             pointedAt = "None"
         else:
             pointedAt = gameDict[game].playerList[gameDict[game].pointer]
+
+        playerString = ""
+        for name in gameDict[game].playerList:
+            if name == pointedAt:
+                name = "-> " + name + " <-"
+            playerString = playerString + name + " | "
         counter = gameDict[game].roundcounter
-        return render_template('game.html', name=game, phase=phase, playerList=playerString, pointedAt=pointedAt, counter=counter)
+
+        scoreboard = ""
+        for player in gameDict[game].turnDict:
+            scoreboard += player + ": " + str(gameDict[game].turnDict[player]['fucked']) + "  "
+
+        return render_template('game.html', name=game, phase=phase, playerList=playerString, pointedAt=pointedAt, counter=counter, scoreboard=scoreboard)
     else:
         return render_template('no_game.html', name=game)
 
@@ -73,7 +82,7 @@ def post_game(game=None, dict=None, inServer=False):
 
                     gameDict[game].takeTurn(name, dict['turn'])
                     return show_game(game)
-                return show_game(game)
+                return "Damn Daniel. Kys"
 
     return "U Fucked Up"
 

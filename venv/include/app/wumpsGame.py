@@ -25,9 +25,9 @@ class WumpsGame:
             # Start round:
             self.phase = "In_Round"
             for name in self.playerList:
-                if not name in self.turnDict:
+                if name not in self.turnDict:
                     self.turnDict[name] = {'turn' : -1, 'fucked' : 0}
-
+        print(self.turnDict)
         if self.turnDict[playerName]['turn'] == -1:
             self.turnDict[playerName]['turn'] = int(turn)
 
