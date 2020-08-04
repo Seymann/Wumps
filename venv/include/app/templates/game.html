@@ -1,6 +1,10 @@
 {% extends "layout.html" %}
 {% block content %}
 
+{% if extramessage %}
+{{ extramessage }}
+{% endif %}
+
 {% if name  %}
 <h1>This is the Game {{ name }} </h1>
 <p>Phase: {{phase}}</p>

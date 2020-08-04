@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 
 @app.route('/game/<game>')
-def show_game(game=None):
+def show_game(game=None, extramessage=None):
     global gameDict
     if game is None and 'game' in request.form:
         game = request.form['game']
@@ -30,8 +30,10 @@ def show_game(game=None):
         scoreboard = ""
         for player in gameDict[game].turnDict:
             scoreboard += player + ": " + str(gameDict[game].turnDict[player]['fucked']) + "  "
-
-        return render_template('game.html', name=game, phase=phase, playerList=playerString, pointedAt=pointedAt, counter=counter, scoreboard=scoreboard)
+        if extramessage is not None:
+            return render_template('game.html', name=game, phase=phase, playerList=playerString, pointedAt=pointedAt, counter=counter, scoreboard=scoreboard, extramessage=extramessage)
+        else:
+            return render_template('game.html', name=game, phase=phase, playerList=playerString, pointedAt=pointedAt, counter=counter, scoreboard=scoreboard)
     else:
         return render_template('no_game.html', name=game)
 
@@ -62,7 +64,7 @@ def post_game(game=None, dict=None, inServer=False):
             theType = dict['type']
             if theType == "reset":
                 gameDict[game].reset()
-                return show_game(game)
+                return show_game(game, "Reset the game, u sly fox")
 
             elif theType == "addName":
                 #TODO add chekc if name already given!
@@ -71,7 +73,7 @@ def post_game(game=None, dict=None, inServer=False):
                 else:
                     Ourname = request.cookies.get('Name')
                 gameDict[game].addName(Ourname)
-                return show_game(game)
+                return show_game(game, "Added a new name: {}.. i would recommend removing him again.".format(Ourname))
 
             elif theType == "taketurn":
                 if 'name' not in dict:
@@ -81,7 +83,7 @@ def post_game(game=None, dict=None, inServer=False):
                 if 'turn' in dict:
 
                     gameDict[game].takeTurn(name, dict['turn'])
-                    return show_game(game)
+                    return show_game(game, "Taken the Turn {}. Bad Idea.".format(dict['turn']))
                 return "Damn Daniel. Kys"
 
     return "U Fucked Up"
