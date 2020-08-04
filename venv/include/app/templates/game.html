@@ -1,0 +1,68 @@
+{% extends "layout.html" %}
+{% block content %}
+
+{% if name  %}
+<h1>This is the Game {{ name }} </h1>
+<p>Phase: {{phase}}</p>
+<p>The Players are: {{ playerList}}</p>
+<p>Currently Pointing at: {{pointedAt}}</p>
+<p>Round Counter: {{ counter }}</p>
+
+
+<form action="/game" method="GET">
+    <p><input type="submit" value="Refresh Page"></p>
+    <input type="hidden" value={{ name }} name="game">
+</form>
+<form action="/game" method="POST">
+    <p><input type="submit" value="Play Along!"></p>
+    <input type="hidden" value="addName" name="type">
+    <input type="hidden" value={{ name }} name="game">
+</form>
+<form action="/game" method="POST">
+    <p><input type="submit" value="Turn: 0"></p>
+    <input type="hidden" value="taketurn" name="type">
+    <input type="hidden" value={{ name }} name="game">
+    <input type="hidden" value="0" name="turn">
+</form>
+<form action="/game" method="POST">
+    <p><input type="submit" value="Turn: 1"></p>
+    <input type="hidden" value="taketurn" name="type">
+    <input type="hidden" value={{ name }} name="game">
+    <input type="hidden" value="1" name="turn">
+</form>
+
+<form action="/game" method="POST">
+    <p><input type="submit" value="Reset"></p>
+    <input type="hidden" value="reset" name="type">
+    <input type="hidden" value={{ name }} name="game">
+</form>
+
+
+<form action="/game" method="POST">
+    <p><input type="text" name="name"></p>
+    <p><input type="submit" value="Add Another One"></p>
+    <input type="hidden" value="addName" name="type">
+    <input type="hidden" value={{ name }} name="game">
+</form>
+
+<form action="/game" method="POST">
+    <p><input type="text" name="name"></p>
+    <p><input type="submit" value="Turn for Another One: 0"></p>
+    <input type="hidden" value="taketurn" name="type">
+    <input type="hidden" value={{ name }} name="game">
+    <input type="hidden" value="0" name="turn">
+</form>
+<form action="/game" method="POST">
+    <p><input type="text" name="name"></p>
+    <p><input type="submit" value="Turn for Another One: 1"></p>
+    <input type="hidden" value="taketurn" name="type">
+    <input type="hidden" value={{ name }} name="game">
+    <input type="hidden" value="1" name="turn">
+</form>
+{% endif %}
+
+
+
+
+
+{% endblock %}
