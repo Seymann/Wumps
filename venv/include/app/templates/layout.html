@@ -1,20 +1,21 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wumps Game</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">;
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/main.css') }}">
+    {% block style %}
+    {% endblock %}
   </head>
   <body>
 
     <header>
-      <div class="container">
         <h1 class="logo">Wumps Game</h1>
         <strong><nav>
           <ul class="menu">
             <li><a href="{{ url_for('home') }}">Home</a></li>
           </ul>
         </nav></strong>
-      </div>
     </header>
 
 
@@ -22,6 +23,11 @@
       {% block content %}
       {% endblock %}
     </div>
-
+  <footer>
+    <hr>
+    <p>&#169 Simon und Isabell</p>
+  </footer>
+  {% block script%}
+    {% endblock %}
   </body>
 </html>

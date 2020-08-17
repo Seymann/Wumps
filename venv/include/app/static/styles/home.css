@@ -1,0 +1,48 @@
+
+.homeform {
+    border-radius: 5px;
+    background-color: lightgray;
+    padding: 20px;
+    margin: auto;
+    width: 50%;
+    alignment: center;
+}
+
+.homeform > form >input[type=text] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.homeform > form > input[type=submit] {
+    width: 100%;
+    color: white;
+    background-color: limegreen;
+    padding: 12px 20px;
+    cursor: pointer;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+}
+
+.homeform > form > input[type=submit]:hover {
+    background-color: green;
+}
+
+.homeform > form > label {
+    font-family: Asap, sans-serif;
+}
+
+hr {
+    padding: 10px;
+    border: none;
+}
+
+.gamefinder {
+    alignment: center;
+    text-align: center;
+}

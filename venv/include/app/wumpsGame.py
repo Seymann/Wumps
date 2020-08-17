@@ -17,6 +17,7 @@ class WumpsGame:
         self.turnDict = {}
 
     def addName(self, name):
+        self.turnDict[name] = {'turn' : -1, 'fucked' : 0}
         self.playerList.append(name)
         self.phase = "Pregame"
 

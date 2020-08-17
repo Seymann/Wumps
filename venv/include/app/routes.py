@@ -3,6 +3,8 @@ from flask import request
 from flask import render_template
 from wumpsGame import WumpsGame
 from flask import make_response
+import json
+import datetime
 
 app = Flask(__name__)
 
@@ -20,20 +22,18 @@ def show_game(game=None, extramessage=None):
         else:
             pointedAt = gameDict[game].playerList[gameDict[game].pointer]
 
-        playerString = ""
-        for name in gameDict[game].playerList:
-            if name == pointedAt:
-                name = "-> " + name + " <-"
-            playerString = playerString + name + " | "
         counter = gameDict[game].roundcounter
 
-        scoreboard = ""
+        playersandscores = []
         for player in gameDict[game].turnDict:
-            scoreboard += player + ": " + str(gameDict[game].turnDict[player]['fucked']) + "  "
+            playersandscores.append( (player, str(gameDict[game].turnDict[player]['fucked'])) )
+
+        timestring = datetime.datetime.now().astimezone().isoformat()
+
         if extramessage is not None:
-            return render_template('game.html', name=game, phase=phase, playerList=playerString, pointedAt=pointedAt, counter=counter, scoreboard=scoreboard, extramessage=extramessage)
+            return render_template('game.html', name=game, phase=phase, playerList=playersandscores, pointedAt=pointedAt, counter=counter, extramessage=extramessage, timestring=timestring)
         else:
-            return render_template('game.html', name=game, phase=phase, playerList=playerString, pointedAt=pointedAt, counter=counter, scoreboard=scoreboard)
+            return render_template('game.html', name=game, phase=phase, playerList=playersandscores, pointedAt=pointedAt, counter=counter, timestring=timestring)
     else:
         return render_template('no_game.html', name=game)
 
@@ -151,4 +151,4 @@ def handle_post():
 
 if __name__ == "__main__":
     gameDict = {}
-    app.run(host='0.0.0.0')
+    app.run(port=5000)

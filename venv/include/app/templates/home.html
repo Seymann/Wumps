@@ -1,27 +1,43 @@
 {% extends "layout.html" %}
+{% block style %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/home.css') }}">
+{% endblock%}
+
 {% block content %}
 
 {% if name %}
-    <h1>Hello {{name}}, wanna play a round?</h1>
-    <p>To play enter the Name of a Game to join or create one!</p>
-    <form action = "/game" method = "GET">
-         <p><h3>Find Game</h3></p>
-         <p><input type = 'text' name = 'game'/></p>
-         <p><input type = 'submit' value = 'Login' /></p>
-    </form>
-    <form action = "/" method = "POST">
-        <p><h3>Create Game</h3></p>
-        <p><input type = 'text' name = 'game'/></p>
-        <p><input type = 'submit' value = 'Login'/></p>
-        <input type="hidden" value="newgame" name="type" />
-    </form>
+    <hr>
+    <div class="gamefinder">
+        <h1>Hello {{name}}, wanna play a round?</h1>
+        <p>To play enter the Name of a Game to join or create one!</p>
+        <hr>
+        <div class="homeform", id="findgame">
+            <form action = "/game" method = "GET">
+                 <label for="name3">Find Game</label>
+                 <input id="name3" type = 'text' name = 'game'/>
+                 <input type = 'submit' value = 'Login' />
+            </form>
+        </div>
+        <hr>
+        <div class="homeform", id="creategame">
+            <form action = "/" method = "POST">
+                <label for="name2">Create Game</label>
+                <input id="name2" type = 'text' name = 'game'/>
+                <input type = 'submit' value = 'Login'/>
+                <input type="hidden" value="newgame" name="type" />
+        </form>
+        </div>
+    </div>
 {% else %}
-    <form action = "/setname" method = "POST">
-         <p><h3>Enter Name</h3></p>
-         <p><input type = 'text' name = 'nm'/></p>
-         <p><input type = 'submit' value = 'Login'/></p>
-         <input type="hidden" value="teststtestte" name="user_id" />
-    </form>
+    <hr>
+    <div class="homeform">
+        <form action = "/setname" method = "POST">
+             <label for="name">Enter Name</label>
+             <input id="name" type='text' name = 'nm'/>
+             <input type='submit' value = 'Login'/>
+             <input type="hidden" value="teststtestte" name="user_id" />
+        </form>
+    </div>
 {% endif %}
 
 {% endblock %}

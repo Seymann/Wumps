@@ -1,4 +1,9 @@
 {% extends "layout.html" %}
+{% block style %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/home.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/game.css') }}">
+{% endblock%}
+
 {% block content %}
 
 {% if extramessage %}
@@ -6,42 +11,65 @@
 {% endif %}
 
 {% if name  %}
-<h1>This is the Game {{ name }} </h1>
-<p>Phase: {{phase}}</p>
-<p>The Players are: {{ playerList}}</p>
-<p>Currently Pointing at: {{pointedAt}}</p>
-<p>Round Counter: {{ counter }}</p>
-<p>Scores: {{ scoreboard }}</p>
+<div id="gameboard">
+    <div id="title69">
+        <span>{{ name }} Round: {{ counter }}</span>
+    </div>
+    <span id="phase">Phase: {{phase}}</span>
+    <span id="timer">00:00</span>
+    <span id="time" hidden>{{timestring}}</span>
+    <hr>
+    <div id="players">
+        {% for player, score in playerList %}
+            <span>{{player}}<br>{{score}}</span>
+        {% endfor %}
+    </div>
+    <hr>
+    <div id="fucked">
+        <span>{{pointedAt}}</span>
+    </div>
+</div>
+<hr>
+<div class="playerbuttons">
+    <div class="playerbutton">
+        <form action="/game" method="GET">
+            <input type="submit" value="Refresh Page">
+            <input type="hidden" value={{ name }} name="game">
+        </form>
+    </div>
+    <div class="playerbutton">
+        <form action="/game" method="POST">
+            <input type="submit" value="Play Along!">
+            <input type="hidden" value="addName" name="type">
+            <input type="hidden" value={{ name }} name="game">
+        </form>
+    </div>
+    <div class="playerbutton">
+        <form action="/game" method="POST">
+            <input type="submit" value="Turn: 0">
+            <input type="hidden" value="taketurn" name="type">
+            <input type="hidden" value={{ name }} name="game">
+            <input type="hidden" value="0" name="turn">
+        </form>
+    </div>
+    <div class="playerbutton">
+        <form action="/game" method="POST">
+            <input type="submit" value="Turn: 1">
+            <input type="hidden" value="taketurn" name="type">
+            <input type="hidden" value={{ name }} name="game">
+            <input type="hidden" value="1" name="turn">
+        </form>
+    </div>
+    <div class="playerbutton">
+        <form action="/game" method="POST">
+            <input type="submit" value="Reset">
+            <input type="hidden" value="reset" name="type">
+            <input type="hidden" value={{ name }} name="game">
+        </form>
+    </div>
+</div>
 
-
-<form action="/game" method="GET">
-    <p><input type="submit" value="Refresh Page"></p>
-    <input type="hidden" value={{ name }} name="game">
-</form>
-<form action="/game" method="POST">
-    <p><input type="submit" value="Play Along!"></p>
-    <input type="hidden" value="addName" name="type">
-    <input type="hidden" value={{ name }} name="game">
-</form>
-<form action="/game" method="POST">
-    <p><input type="submit" value="Turn: 0"></p>
-    <input type="hidden" value="taketurn" name="type">
-    <input type="hidden" value={{ name }} name="game">
-    <input type="hidden" value="0" name="turn">
-</form>
-<form action="/game" method="POST">
-    <p><input type="submit" value="Turn: 1"></p>
-    <input type="hidden" value="taketurn" name="type">
-    <input type="hidden" value={{ name }} name="game">
-    <input type="hidden" value="1" name="turn">
-</form>
-
-<form action="/game" method="POST">
-    <p><input type="submit" value="Reset"></p>
-    <input type="hidden" value="reset" name="type">
-    <input type="hidden" value={{ name }} name="game">
-</form>
-
+<hr>
 
 <form action="/game" method="POST">
     <p><input type="text" name="name"></p>
@@ -49,7 +77,7 @@
     <input type="hidden" value="addName" name="type">
     <input type="hidden" value={{ name }} name="game">
 </form>
-
+<!---
 <form action="/game" method="POST">
     <p><input type="text" name="name"></p>
     <p><input type="submit" value="Turn for Another One: 0"></p>
@@ -64,10 +92,11 @@
     <input type="hidden" value={{ name }} name="game">
     <input type="hidden" value="1" name="turn">
 </form>
+--->
 {% endif %}
 
-
-
-
-
 {% endblock %}
+
+{% block script %}
+<script src="{{ url_for('static', filename='js/game.js') }}" charset="utf-8"></script>
+{% endblock%}
